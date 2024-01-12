@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./MovieCatalog.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 const posterUrl = (poster) => 'https://image.tmdb.org/t/p/original' + poster;
 
@@ -24,11 +26,18 @@ export const MovieCatalog = () => {
             .catch(err => console.error(err));
     }
 
+
     useEffect(traerLasPelisDelBackend, []);
 
     return (
-        <div>{
-            movies.map(movie => <img className="poster" src={posterUrl(movie.poster_path)} />)
-        }</div>
+        <div>
+            <h2>Populares</h2>
+            <div className="poster-list">
+                {
+                    movies.map(movie => <img className="poster" src={posterUrl(movie.poster_path)} />)
+                }
+            </div>
+
+        </div>
     );
 }
