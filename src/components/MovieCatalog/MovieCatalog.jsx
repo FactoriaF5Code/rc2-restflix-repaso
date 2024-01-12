@@ -14,22 +14,13 @@ export const MovieCatalog = () => {
         api.getMovies(category, setFunction);
     }
 
-    const getPopularMovies = () => {
-        getMovies('popular', setPopularMovies);
-    }
-
-    const getUpcomingMovies = () => {
-        getMovies('upcoming', setUpcomingMovies);
-    }
-
-    const getTopRatedMovies = () => {
-        getMovies('top_rated', setTopRatedMovies);
-    }
-
     useEffect(() => {
-        getPopularMovies();
-        getTopRatedMovies();
-        getUpcomingMovies();
+        let categorias = [
+            { category: 'popular', callback: setPopularMovies },
+            { category: 'upcoming', callback: setUpcomingMovies },
+            { category: 'top_rated', callback: setTopRatedMovies }];
+
+        categorias.forEach( ({category, callback}) => getMovies(category, callback) );
     }, []);
 
     return (
