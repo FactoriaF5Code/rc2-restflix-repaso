@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import "./MovieCatalog.css";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import { MovieList } from "../MovieList/MovieList";
 
-const posterUrl = (poster) => 'https://image.tmdb.org/t/p/original' + poster;
 
 export const MovieCatalog = () => {
+    const [popularMovies, setPopularMovies] = useState([]);
+    const [upcomingMovies, setUpcomingMovies] = useState([]);
+    const [topRatedMovies, setTopRatedMovies] = useState([]);
 
 
-    const [movies, setMovies] = useState([{ title: "El rey leon" }, { title: "La jungla de cristal" }])
-
-
-    const traerLasPelisDelBackend = () => {
+    const getMovies = (url, setFunction) => {
         const options = {
             method: 'GET',
             headers: {
@@ -20,24 +18,35 @@ export const MovieCatalog = () => {
             }
         };
 
-        fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
+        fetch(url, options)
             .then(response => response.json())
-            .then(response => setMovies(response.results))
+            .then(response => setFunction(response.results))
             .catch(err => console.error(err));
     }
 
+    const getPopularMovies = () => {
+        getMovies('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', setPopularMovies);
+    }
 
-    useEffect(traerLasPelisDelBackend, []);
+    const getUpcomingMovies = () => {
+        getMovies('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', setUpcomingMovies);
+    }
+
+    const getTopRatedMovies = () => {
+        getMovies('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', setTopRatedMovies);
+    }
+
+    useEffect(() => {
+        getPopularMovies();
+        getTopRatedMovies();
+        getUpcomingMovies();
+    }, []);
 
     return (
         <div>
-            <h2>Populares</h2>
-            <div className="poster-list">
-                {
-                    movies.map(movie => <img className="poster" src={posterUrl(movie.poster_path)} />)
-                }
-            </div>
-
+            <MovieList title="Popus" movies={popularMovies} />
+            <MovieList title="Próximos estrenos" movies={upcomingMovies} />
+            <MovieList title="Mejor Valoradas" movies={topRatedMovies} />
         </div>
     );
 }

@@ -3,6 +3,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import logo from "../../assets/logo.svg";
 import perfil from "../../assets/Jaguar.jpg"
 import "./Header.css";
+import { Link } from 'react-router-dom';
 
 
 export const Header = () => {
@@ -10,11 +11,8 @@ export const Header = () => {
         <section>
             <img src={logo} alt="Netflix" />
             <ul>
-                <li>Inicio</li>
-                <li>Series</li>
-                <li>Películas</li>
-                <li>Novedades más vistas</li>
-                <li>Mi lista</li>
+                <Link to="/">Películas</Link>
+                <Link to="/tv">Series</Link>
             </ul>
         </section>
         <section>
