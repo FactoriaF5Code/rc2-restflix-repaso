@@ -1,5 +1,5 @@
-- [ ] Header
-- [ ] Página de pelis
+- [x] Header
+- [ ] Página de pelis: listas de recomendadas, mas valoradas, próximos estrenos.
 - [ ] Página de series 
 - [ ] Slider
 - [ ] Buscador
